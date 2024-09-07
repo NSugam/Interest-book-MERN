@@ -11,7 +11,7 @@ import AddCustomerModal from './components/AddCustomerModal';
 axios.defaults.withCredentials = true // imp for httpOnly Cookies
 
 function App() {
-  window.history.replaceState({}, document.title, window.location.pathname)
+  // window.history.replaceState({}, document.title, window.location.pathname)
   return (
 
     <div>
@@ -23,8 +23,9 @@ function App() {
           <>
             <Routes>
               <Route exact path="/" element={<MainBody />} />
+              <Route exact path="/lenders" element={<MainBody />} />
               <Route exact path="/login" element={<Login />} />
-              <Route exact path="/signup" element={<Signup />} />
+              {/* <Route exact path="/signup" element={<Signup />} /> */}
             </Routes>
           </>
         </Router>

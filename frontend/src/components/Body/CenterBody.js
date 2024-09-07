@@ -1,38 +1,87 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../../context/SharedState'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import '../css/CenterBody.css'
 
 export default function CenterBody() {
   const states = useContext(Context)
   const navigate = useNavigate()
+  const location = useLocation()
+  const [filteredCustomer, setFilteredCustomer] = useState({})
 
-  if (!states.customers.map) {
-    return <>Loading...</>
+  useEffect(() => {
+    const getCustomers = () => {
+      let FilteredCustomer = [];
+
+
+      if (location.pathname.includes('/lenders')) {
+        FilteredCustomer = states.customers.filter((customer) => customer.type === 'lender');
+
+      } else if (location.pathname.includes('/')) {
+        FilteredCustomer = states.customers.filter((customer) => customer.type === 'customer');
+      }
+
+      if (FilteredCustomer.length > 0) {
+        setFilteredCustomer(FilteredCustomer);
+      }
+    };
+
+    if (states.customers.length > 0) {
+      getCustomers();
+    }
+
+  }, [location.pathname, states])
+
+  if (!filteredCustomer.map) {
+    return <>
+      <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: '80vh' }}>
+        <img src='customer.png' height={200} /><br />
+        <h3>No customer data !</h3>
+        <button className='btn btn-success btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add new data</button>
+      </div>
+    </>
   }
 
   const handleUser = (id) => {
-    navigate('/?id=' + id)
+    navigate('?id=' + id)
   }
 
   // Calculate the total amount
-  const totalAmount = states.customers.reduce((acc, data) => acc + data.amount, 0);
+  const totalAmount = filteredCustomer.reduce((acc, data) => acc + data.amount, 0);
 
   return (
-    <div className='container mt-3'>
+    <div className='container mt-4'>
       <div className='d-flex justify-content-between'>
-        <h6 className='d-flex justify-content-center text-danger'>Customer Details</h6>
-        <h6 className='d-flex justify-content-center text-success'>You'll Get: Rs. {totalAmount} <span className="material-symbols-outlined ms-2" style={{ color: 'green' }}>call_received</span></h6>
+
+        {location.pathname.includes('/lenders') ?
+        <>
+        <h6 className='d-flex justify-content-center text-danger'>Total Loan: Rs. {totalAmount}</h6>
+          <h6 className='d-flex justify-content-center text-danger'>
+            Loan with Interest: Rs. {states.totalForLender}
+            <span className="material-symbols-outlined ms-2" style={{ color: 'red' }}>north_east</span>
+          </h6> </>
+          :
+          <>
+        <h6 className='d-flex justify-content-center text-success'>Total: Rs. {totalAmount}</h6>
+          <h6 className='d-flex justify-content-center text-success'>
+            Amount with Interest: Rs. {states.totalForCustomer}
+            <span className="material-symbols-outlined ms-2" style={{ color: 'green' }}>call_received</span>
+          </h6> </>
+        }
+
       </div>
-      <hr />
-      <h6 className='mt-4'>Search for customers</h6>
-      <div className="d-flex">
-        <input className="form-control me-2" type="search" placeholder="Search by Name" />
-        <button className="btn btn-outline-danger d-flex">
-          <span className="material-symbols-outlined">person_search</span>
-        </button>
+      <hr className='m-auto' />
+      <div class="sticky-container pt-4" style={{ backgroundColor: 'white' }}>
+        <h6 className=''>Search for customers</h6>
+        <div className="d-flex">
+          <input className="form-control me-2" type="search" placeholder="Search by Name" />
+          <button className="btn btn-outline-danger d-flex">
+            <span className="material-symbols-outlined">person_search</span>
+          </button>
+        </div>
       </div>
 
-      <table className="table mt-4 table-hover table-borderless table-striped">
+      <table className="table table-hover table-borderless table-striped">
         <thead>
           <tr>
             <th scope="col" className='text-secondary'>NAME</th>
@@ -42,17 +91,27 @@ export default function CenterBody() {
         </thead>
 
         <tbody>
-          {states.customers.map((data) =>
+          {filteredCustomer.map((data) =>
 
-              <tr onClick={() => handleUser(data._id)} style={{ cursor: 'pointer' }} key={data._id}>
-                <td>{data.fullname}<br />
-                  <div className='text-secondary d-flex'><span className="material-symbols-outlined me-1" style={{ fontSize: '20px' }}>phone_in_talk</span>{data.phone}</div>
-                </td>
+            <tr onClick={() => handleUser(data._id)} style={{ cursor: 'pointer' }} key={data._id}>
+              <td>{data.fullname}<br />
+                <div className='text-secondary d-flex'>
+                  <span className="material-symbols-outlined me-1" style={{ fontSize: '20px' }}>pending_actions</span>
+                  {new Date(data.dateGiven).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                  })}</div>
+              </td>
 
-                <td className=' text-danger text-center'>{data.interest}% p. a</td>
+              <td className=' text-danger text-center'>{data.interest}% p. a</td>
 
-                <td className='text-end text-danger'>Rs. {data.amount}</td>
-              </tr>
+              <td className='text-end text-success'>Rs. {data.amount}<br />
+                {data.type === 'lender' ?
+                  <span className='text-danger text-italic'>you got</span> :
+                  <span className='text-secondary text-italic'>without interest</span>}
+              </td>
+            </tr>
 
           )}
 
@@ -60,8 +119,10 @@ export default function CenterBody() {
         </tbody>
       </table>
 
-      <div className='d-flex justify-content-end'>
-        <button className='btn btn-outline-success btn-sm d-flex' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add customer</button>
+      <div className='d-flex justify-content-end sticky-bottom'>
+      {location.pathname.includes('/lenders') ?
+        <button className='btn btn-danger btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Lender</button>:
+        <button className='btn btn-success btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Customer</button>}
       </div>
 
     </div>

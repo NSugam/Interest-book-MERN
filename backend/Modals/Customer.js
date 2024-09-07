@@ -5,6 +5,7 @@ const customerDataSchema = new mongoose.Schema({
     phone: { type: Number, unique: true },
     amount: Number,
     interest: Number,
+    type: String,
     dateGiven: { type: Date, default: Date.now}
 })
 const customerDataModel = mongoose.model("customer", customerDataSchema)

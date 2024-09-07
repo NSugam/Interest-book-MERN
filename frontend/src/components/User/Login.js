@@ -78,7 +78,7 @@ export default function Login() {
                   </div>
 
                   <div className='d-flex justify-content-end mt-5'>
-                    <Link class="btn btn-dark link btn-sm d-flex me-3" to="/signup">Create new account</Link>
+                    {/* <Link class="btn btn-dark link btn-sm d-flex me-3" to="/signup">Create new account</Link> */}
                     <button class="btn btn-danger btn-sm d-flex">Login<span class="material-symbols-outlined ms-1">login</span></button>
                   </div>
                 </form>

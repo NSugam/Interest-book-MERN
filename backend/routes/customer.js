@@ -5,13 +5,18 @@ const customerDataModel = require('../Modals/Customer')
 const Authenticated = require('../middleware/auth');
 
 // ROUTE 1: Add new customer
-router.post('/add', Authenticated, async (req, res) => {
-    const { fullname, phone, amount, interest, dateGiven } = req.body;
+router.post('/add', async (req, res) => {
+    const { fullname, phone, amount, interest, type, dateGiven } = req.body;
     const checkPhone = await customerDataModel.find({ phone: phone })
 
     if (checkPhone == "") {
-        customerDataModel.create({ fullname, phone, amount, interest, dateGiven })
-        res.json({ message: "Customer Added Successfully", success: true })
+        customerDataModel.create({ fullname, phone, amount, interest, type, dateGiven })
+        if (type === 'lender') {
+            res.json({ message: "New Lender Added successfully", success: true })
+        }
+        if (type === 'customer') {
+            res.json({ message: "New Customer Added Successfully", success: true })
+        }
 
     } else {
         res.json({ message: "Phone number already exist", success: false })
@@ -46,5 +51,17 @@ router.put('/update', async (req, res) => {
         res.json({ message: "Server error", success: false });
     }
 });
+
+// ROUTE 4: Delete customer by Id
+router.post('/delete', async (req, res) => {
+    const {customerId} = req.body
+    try {
+        await customerDataModel.findByIdAndDelete(customerId)
+        res.json({ message: "Data deleted", success: true });
+
+    }catch (error) {
+        res.json({ message: "User not found", success: false });
+    }
+})
 
 module.exports = router;

@@ -43,11 +43,11 @@ export default function MainBody() {
                         <LeftBody />
                     </div>
 
-                    <div className="col-sm-5 border-start border-2 scrollable">
+                    <div className="col-sm-6 border-start border-2 scrollable">
                         <CenterBody />
                     </div>
 
-                    <div className="col-sm-5 border-start border-2">
+                    <div className="col-sm-4 border-start border-2">
                         <RightBody />
                     </div>
 
