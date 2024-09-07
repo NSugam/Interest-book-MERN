@@ -1,0 +1,19 @@
+.background-container {
+    background: linear-gradient(45deg, #ea4b4b, #00bcd4, #ea4b4b);
+    height: auto;
+    background-size: 300% 300%; /* Make the background larger to allow movement */
+    background-position: 0% 50%; /* Initial position */
+    animation: moveBackground 10s ease infinite; /* Animation properties */
+}
+
+@keyframes moveBackground {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

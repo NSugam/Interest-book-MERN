@@ -1,24 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { SharedState } from './context/SharedState';
+import Navbar from './components/Navbar';
+import Login from './components/User/Login';
+import Signup from './components/User/Signup';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import MainBody from './components/Body/MainBody';
+import AddCustomerModal from './components/AddCustomerModal';
+axios.defaults.withCredentials = true // imp for httpOnly Cookies
 
 function App() {
+  window.history.replaceState({}, document.title, window.location.pathname)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <div>
+      <SharedState>
+        <Router>
+          <Navbar />
+          <AddCustomerModal/>
+          <ToastContainer />
+          <>
+            <Routes>
+              <Route exact path="/" element={<MainBody />} />
+              <Route exact path="/login" element={<Login />} />
+              <Route exact path="/signup" element={<Signup />} />
+            </Routes>
+          </>
+        </Router>
+      </SharedState>
+
     </div>
+
   );
 }
 
