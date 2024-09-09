@@ -5,21 +5,25 @@ const customerDataModel = require('../Modals/Customer')
 const Authenticated = require('../middleware/auth');
 
 // ROUTE 1: Add new customer
-router.post('/add', async (req, res) => {
-    const { fullname, phone, amount, interest, type, dateGiven } = req.body;
-    const checkPhone = await customerDataModel.find({ phone: phone })
+router.post('/add', Authenticated, async (req, res) => {
+    try {
+        const { fullname, phone, amount, interest, type, dateGiven } = req.body;
+        const checkPhone = await customerDataModel.find({ phone: phone })
 
-    if (checkPhone == "") {
-        customerDataModel.create({ fullname, phone, amount, interest, type, dateGiven })
-        if (type === 'lender') {
-            res.json({ message: "New Lender Added successfully", success: true })
-        }
-        if (type === 'customer') {
-            res.json({ message: "New Customer Added Successfully", success: true })
-        }
+        if (checkPhone == "") {
+            customerDataModel.create({ fullname, phone, amount, interest, type, dateGiven })
+            if (type === 'lender') {
+                res.json({ message: "New Lender Added successfully", success: true })
+            }
+            if (type === 'customer') {
+                res.json({ message: "New Customer Added Successfully", success: true })
+            }
 
-    } else {
-        res.json({ message: "Phone number already exist", success: false })
+        } else {
+            res.json({ message: "Phone number already exist", success: false })
+        }
+    } catch(error) {
+        res.json({ message: error.message, success: false })
     }
 })
 
@@ -30,7 +34,7 @@ router.get('/all', async (req, res) => {
 })
 
 // ROUTE 3: Update a customer data
-router.put('/update', async (req, res) => {
+router.put('/update', Authenticated, async (req, res) => {
     const { phone, fullname, amount, interest, dateGiven } = req.body;
 
     try {
@@ -53,13 +57,13 @@ router.put('/update', async (req, res) => {
 });
 
 // ROUTE 4: Delete customer by Id
-router.post('/delete', async (req, res) => {
-    const {customerId} = req.body
+router.post('/delete', Authenticated, async (req, res) => {
+    const { customerId } = req.body
     try {
         await customerDataModel.findByIdAndDelete(customerId)
         res.json({ message: "Data deleted", success: true });
 
-    }catch (error) {
+    } catch (error) {
         res.json({ message: "User not found", success: false });
     }
 })

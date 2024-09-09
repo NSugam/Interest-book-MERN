@@ -9,7 +9,7 @@ const app = express()
 
 // Middlewares
 app.use(express.json())
-app.use(cors({credentials: true, origin: ['http://localhost:3000', 'https://interest-book.vercel.app']}));
+app.use(cors({credentials: true, origin: ['https://interest-book.vercel.app']}));
 app.use(cookieParser())
 
 mongoose.connect(process.env.MONGODB_SERVER )

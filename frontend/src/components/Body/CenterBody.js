@@ -44,7 +44,7 @@ export default function CenterBody() {
     </>
   }
 
-  if (!filteredCustomer.length) {
+  if (!filteredCustomer.length && !searchParam?.length) {
     return <>
       <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: '80vh' }}>
         <img src='customer.png' height={200} /><br />

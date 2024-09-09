@@ -83,10 +83,10 @@ router.get('/all', Authenticated, async (req, res) => {
 router.get('/logout', Authenticated, async (req, res) => {
     try {
         res.cookie('_xz', '', {
-            sameSite: 'strict',
+            sameSite: 'None',
             httpOnly: true,
             path: '/',
-            secure: false,
+            secure: true,
             expires: new Date(0)
         });
         res.json({message:"Account Logged Out", success: true})

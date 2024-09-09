@@ -12,17 +12,13 @@ export default function MainBody() {
     const states = useContext(Context)
     const navigate = useNavigate()
 
-    const [loading, setLoading] = useState(true);
-
     useEffect(() => {
-        setLoading(true)
         axios.get(states.hostname + '/api/user/profile').then((res) => {
             if (res.data.success) {
                 states.setIsAuthenticated(true)
 
             } else {
                 states.setIsAuthenticated(false)
-                setLoading(false)
                 navigate('/login')
             }
         }).catch((error) => {
@@ -37,18 +33,13 @@ export default function MainBody() {
                 theme: "dark",
                 transition: Flip,
             });
-        })
-        setLoading(false)
+            navigate('/login')
+        });
+
     }, [])
-
-    if(loading) {
-        return <> Loading... </>
-    }
-
 
     return (
         <>
-
             <div className='appearfromRight'>
                 <div className="row" style={{ height: '100vh' }}>
 
@@ -66,9 +57,6 @@ export default function MainBody() {
 
                 </div>
             </div>
-
-
-
         </>
     )
 }
