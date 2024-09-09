@@ -10,7 +10,7 @@ export default function LeftBody() {
   const location = useLocation()
 
   const handleLogout = () => {
-    axios.get(states.hostname + '/api/user/logout').then((res) => {
+    axios.get(states.hostname + '/api/user/logout', { withCredentials: true }).then((res) => {
         if (res.data.success) {
             toast.success(res.data.message, {
                 position: "top-right",
