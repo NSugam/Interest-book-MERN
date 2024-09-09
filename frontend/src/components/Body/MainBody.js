@@ -7,6 +7,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../css/MainBody.css'
 import { Flip, toast } from 'react-toastify'
+axios.defaults.withCredentials = true
 
 export default function MainBody() {
     const states = useContext(Context)

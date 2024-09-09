@@ -3,6 +3,7 @@ import React, { useContext } from 'react'
 import { Bounce, toast } from 'react-toastify';
 import { Context } from '../../context/SharedState';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+axios.defaults.withCredentials = true
 
 export default function LeftBody() {
   const states = useContext(Context)
