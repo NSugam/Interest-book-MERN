@@ -46,6 +46,7 @@ router.post('/login', async (req, res) => {
 
         //sending server side Cookies
         res.cookie('_xz', token, {
+            domain: 'interest-book-backend.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
@@ -82,13 +83,12 @@ router.get('/all', Authenticated, async (req, res) => {
 // ROUTER 5: Logout (Clear serverside cookies)
 router.get('/logout', async (req, res) => {
     try {
-        res.cookie('_xz', '', {
-            domain: '.vercel.app',
+        res.clearCookie('_xz', {
+            domain: 'interest-book-backend.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
-            secure: true,
-            expires: new Date(0)
+            secure: true
         });
         res.json({message:"Account Logged Out", success: true})
 
