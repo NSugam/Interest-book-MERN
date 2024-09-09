@@ -82,11 +82,12 @@ router.get('/all', Authenticated, async (req, res) => {
 // ROUTER 5: Logout (Clear serverside cookies)
 router.get('/logout', async (req, res) => {
     try {
-        res.clearCookie('_xz', {
+        res.cookie('_xz', '', {
             sameSite: 'None',
             httpOnly: true,
             path: '/',
-            secure: true
+            secure: true,
+            expires: new Date(0)
         });
         res.json({message:"Account Logged Out", success: true})
 
