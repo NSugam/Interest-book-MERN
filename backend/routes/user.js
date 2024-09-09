@@ -80,7 +80,7 @@ router.get('/all', Authenticated, async (req, res) => {
 })
 
 // ROUTER 5: Logout (Clear serverside cookies)
-router.get('/logout', Authenticated, async (req, res) => {
+router.get('/logout', async (req, res) => {
     try {
         res.cookie('_xz', 'abcd', {
             sameSite: 'None',
