@@ -8,10 +8,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import MainBody from './components/Body/MainBody';
 import AddCustomerModal from './components/AddCustomerModal';
-axios.defaults.withCredentials = true // imp for httpOnly Cookies
+axios.defaults.withCredentials = true
 
 function App() {
-  // window.history.replaceState({}, document.title, window.location.pathname)
   return (
 
     <div>

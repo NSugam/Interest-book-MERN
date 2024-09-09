@@ -6,6 +6,7 @@ import { Context } from '../../context/SharedState'
 import { useLocation, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../css/MainBody.css'
+import { Flip, toast } from 'react-toastify'
 
 export default function MainBody() {
     const states = useContext(Context)
@@ -24,6 +25,18 @@ export default function MainBody() {
                 setLoading(false)
                 navigate('/login')
             }
+        }).catch((error) => {
+            toast.error(error.message, {
+                position: "top-center",
+                autoClose: 1000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Flip,
+            });
         })
         setLoading(false)
     }, [])

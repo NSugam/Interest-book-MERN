@@ -2,6 +2,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { createContext } from "react";
 import moment from 'moment';
+import { Flip, toast } from 'react-toastify';
 
 const Context = createContext();
 
@@ -31,11 +32,23 @@ const SharedState = (props) => {
         modal.toggle()
     }
 
-    useEffect( () => {
+    useEffect(() => {
         const getAllCustomers = async () => {
             await axios.get(hostname + '/api/customer/all').then((res) => {
                 setCustomers(res.data);
-            });
+            }).catch((error) => {
+                toast.error(error.message, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Flip,
+                });
+            })
         };
 
         const getUserData = async () => {
@@ -46,11 +59,23 @@ const SharedState = (props) => {
                 } else {
                     setIsAuthenticated(false);
                 }
-            });
+            }).catch((error) => {
+                toast.error(error.message, {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Flip,
+                });
+            })
         };
 
-         getAllCustomers();
-         getUserData();
+        getAllCustomers();
+        getUserData();
 
     }, []);
 
@@ -60,7 +85,7 @@ const SharedState = (props) => {
             let totalAmountforLender = 0;
             let totalAmountforCustomer = 0;
             customers.forEach((customer) => {
-                if(customer.type === 'lender') {
+                if (customer.type === 'lender') {
                     const startDateTime = moment(customer.dateGiven);
                     const endDateTime = moment();
                     const totalDays = endDateTime.diff(startDateTime, 'days');
@@ -70,7 +95,7 @@ const SharedState = (props) => {
                     const amountWithInterest = principal + interestAmount;
                     totalAmountforLender += amountWithInterest;
                 }
-                if(customer.type === 'customer') {
+                if (customer.type === 'customer') {
                     const startDateTime = moment(customer.dateGiven);
                     const endDateTime = moment();
                     const totalDays = endDateTime.diff(startDateTime, 'days');
@@ -95,7 +120,7 @@ const SharedState = (props) => {
             isAuthenticated, setIsAuthenticated,
             customers, setCustomers,
             filteredCustomer, setfilteredCustomer,
-            totalForCustomer,totalForLender,
+            totalForCustomer, totalForLender,
             toggleModal
         }}>
 

@@ -12,7 +12,9 @@ app.use(express.json())
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(cookieParser())
 
-mongoose.connect(process.env.MONGODB_SERVER || 'mongodb://localhost:27017/interest-book')
+mongoose.connect(process.env.MONGODB_SERVER )
+// mongoose.connect('mongodb://localhost:27017/interest-book')
+
   .catch((error) => {
     console.error("DB connection error:", error);
   });

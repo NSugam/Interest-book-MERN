@@ -9,6 +9,7 @@ export default function CenterBody() {
   const location = useLocation()
   const [filteredCustomer, setFilteredCustomer] = useState({})
 
+  const [searchParam, setSearchParam] = useState()
   useEffect(() => {
     const getCustomers = () => {
       let FilteredCustomer = [];
@@ -21,6 +22,13 @@ export default function CenterBody() {
         FilteredCustomer = states.customers.filter((customer) => customer.type === 'customer');
       }
 
+      // If searchParam exists, further filter by name
+      if (searchParam) {
+        FilteredCustomer = FilteredCustomer.filter((customer) =>
+          customer.fullname.toLowerCase().includes(searchParam.toLowerCase())
+        );
+      }
+
       if (FilteredCustomer.length > 0) {
         setFilteredCustomer(FilteredCustomer);
       }
@@ -30,7 +38,7 @@ export default function CenterBody() {
       getCustomers();
     }
 
-  }, [location.pathname, states])
+  }, [location.pathname, states, searchParam])
 
   if (!filteredCustomer.map) {
     return <>
@@ -54,19 +62,19 @@ export default function CenterBody() {
       <div className='d-flex justify-content-between'>
 
         {location.pathname.includes('/lenders') ?
-        <>
-        <h6 className='d-flex justify-content-center text-danger'>Total Loan: Rs. {totalAmount}</h6>
-          <h6 className='d-flex justify-content-center text-danger'>
-            Loan with Interest: Rs. {states.totalForLender}
-            <span className="material-symbols-outlined ms-2" style={{ color: 'red' }}>north_east</span>
-          </h6> </>
+          <>
+            <h6 className='d-flex justify-content-center text-danger'>Total Loan: Rs. {totalAmount}</h6>
+            <h6 className='d-flex justify-content-center text-danger'>
+              Loan with Interest: Rs. {states.totalForLender}
+              <span className="material-symbols-outlined ms-2" style={{ color: 'red' }}>north_east</span>
+            </h6> </>
           :
           <>
-        <h6 className='d-flex justify-content-center text-success'>Total: Rs. {totalAmount}</h6>
-          <h6 className='d-flex justify-content-center text-success'>
-            Amount with Interest: Rs. {states.totalForCustomer}
-            <span className="material-symbols-outlined ms-2" style={{ color: 'green' }}>call_received</span>
-          </h6> </>
+            <h6 className='d-flex justify-content-center text-success'>Total: Rs. {totalAmount}</h6>
+            <h6 className='d-flex justify-content-center text-success'>
+              Amount with Interest: Rs. {states.totalForCustomer}
+              <span className="material-symbols-outlined ms-2" style={{ color: 'green' }}>call_received</span>
+            </h6> </>
         }
 
       </div>
@@ -74,7 +82,7 @@ export default function CenterBody() {
       <div class="sticky-container pt-4" style={{ backgroundColor: 'white' }}>
         <h6 className=''>Search for customers</h6>
         <div className="d-flex">
-          <input className="form-control me-2" type="search" placeholder="Search by Name" />
+          <input className="form-control me-2" type="search" placeholder="Search by Name" onChange={e=>setSearchParam(e.target.value)}/>
           <button className="btn btn-outline-danger d-flex">
             <span className="material-symbols-outlined">person_search</span>
           </button>
@@ -120,9 +128,9 @@ export default function CenterBody() {
       </table>
 
       <div className='d-flex justify-content-end sticky-bottom'>
-      {location.pathname.includes('/lenders') ?
-        <button className='btn btn-danger btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Lender</button>:
-        <button className='btn btn-success btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Customer</button>}
+        {location.pathname.includes('/lenders') ?
+          <button className='btn btn-danger btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Lender</button> :
+          <button className='btn btn-success btn-sm d-flex mb-4' onClick={() => states.toggleModal()}><span className="material-symbols-outlined me-2">person_add</span>Add Customer</button>}
       </div>
 
     </div>
