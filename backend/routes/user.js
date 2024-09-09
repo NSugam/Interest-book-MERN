@@ -46,7 +46,6 @@ router.post('/login', async (req, res) => {
 
         //sending server side Cookies
         res.cookie('_xz', token, {
-            domain: 'interest-book.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
@@ -84,7 +83,7 @@ router.get('/all', Authenticated, async (req, res) => {
 router.get('/logout', async (req, res) => {
     try {
         res.cookie('_xz', 'abcd', {
-            domain: 'interest-book.vercel.app',
+            domain: 'interest-book-backend.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
