@@ -46,10 +46,10 @@ router.post('/login', async (req, res) => {
 
         //sending server side Cookies
         res.cookie('_xz', token, {
-            sameSite: 'strict',
+            sameSite: 'None',
             httpOnly: true,  // Only allow cookie to be accessed by the server
             path: '/',
-            secure: false,   // true in production with HTTPS
+            secure: true,   // true in production with HTTPS
             expires: new Date(new Date().getTime() + 60 * 10000)
         });
         res.json({ message: "Welcome to InterestBook", user, success: true })
