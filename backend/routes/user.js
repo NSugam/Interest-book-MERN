@@ -83,7 +83,7 @@ router.get('/all', Authenticated, async (req, res) => {
 router.get('/logout', async (req, res) => {
     try {
         res.cookie('_xz', '', {
-            domain: 'interest-book-backend.vercel.app',
+            domain: '.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
