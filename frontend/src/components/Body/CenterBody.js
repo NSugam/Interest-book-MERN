@@ -14,7 +14,6 @@ export default function CenterBody() {
     const getCustomers = () => {
       let FilteredCustomer = [];
 
-
       if (location.pathname.includes('/lenders')) {
         FilteredCustomer = states.customers.filter((customer) => customer.type === 'lender');
 
@@ -22,25 +21,30 @@ export default function CenterBody() {
         FilteredCustomer = states.customers.filter((customer) => customer.type === 'customer');
       }
 
-      // If searchParam exists, further filter by name
       if (searchParam) {
         FilteredCustomer = FilteredCustomer.filter((customer) =>
           customer.fullname.toLowerCase().includes(searchParam.toLowerCase())
         );
       }
-
-      if (FilteredCustomer.length > 0) {
-        setFilteredCustomer(FilteredCustomer);
-      }
+      setFilteredCustomer(FilteredCustomer);
     };
 
-    if (states.customers.length > 0) {
+    if (!states.loading) {
       getCustomers();
     }
 
   }, [location.pathname, states, searchParam])
 
-  if (!filteredCustomer.map) {
+  if (states.loading) {
+    return <>
+      <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: '80vh' }}>
+        <img src='waiting.jpg' height={150} /><br />
+        <h3>Waiting for server...</h3>
+      </div>
+    </>
+  }
+
+  if (!filteredCustomer.length) {
     return <>
       <div className='d-flex flex-column justify-content-center align-items-center' style={{ height: '80vh' }}>
         <img src='customer.png' height={200} /><br />
@@ -82,7 +86,7 @@ export default function CenterBody() {
       <div class="sticky-container pt-4" style={{ backgroundColor: 'white' }}>
         <h6 className=''>Search for customers</h6>
         <div className="d-flex">
-          <input className="form-control me-2" type="search" placeholder="Search by Name" onChange={e=>setSearchParam(e.target.value)}/>
+          <input className="form-control me-2" type="search" placeholder="Search by Name" onChange={e => setSearchParam(e.target.value)} />
           <button className="btn btn-outline-danger d-flex">
             <span className="material-symbols-outlined">person_search</span>
           </button>

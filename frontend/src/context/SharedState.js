@@ -8,7 +8,10 @@ const Context = createContext();
 
 const SharedState = (props) => {
 
-    const hostname = process.env.REACT_APP_HOSTNAME
+    const hostname = process.env.REACT_APP_LOCALHOST
+
+    // Loading state
+    const [loading, setLoading] = useState(true);
 
     // Storing user details
     const [user, setUser] = useState({});
@@ -34,9 +37,12 @@ const SharedState = (props) => {
 
     useEffect(() => {
         const getAllCustomers = async () => {
-            await axios.get(hostname + '/api/customer/all').then((res) => {
+            try {
+                const res = await axios.get(hostname + '/api/customer/all');
                 setCustomers(res.data);
-            }).catch((error) => {
+                setLoading(false); // If Success, stop loading
+            } catch (error) {
+                setLoading(true); // Keep loading true in case of error
                 toast.error(error.message, {
                     position: "top-center",
                     autoClose: 1000,
@@ -48,18 +54,21 @@ const SharedState = (props) => {
                     theme: "dark",
                     transition: Flip,
                 });
-            })
+            }
         };
-
+    
         const getUserData = async () => {
-            await axios.get(hostname + '/api/user/profile').then((res) => {
+            try {
+                const res = await axios.get(hostname + '/api/user/profile');
                 if (res.data.success) {
                     setUser(res.data.user);
                     setIsAuthenticated(true);
                 } else {
                     setIsAuthenticated(false);
                 }
-            }).catch((error) => {
+                setLoading(false); // Stop loading on success
+            } catch (error) {
+                setLoading(true); // Keep loading true in case of error
                 toast.error(error.message, {
                     position: "top-center",
                     autoClose: 1000,
@@ -71,12 +80,19 @@ const SharedState = (props) => {
                     theme: "dark",
                     transition: Flip,
                 });
-            })
+            }
         };
-
-        getAllCustomers();
-        getUserData();
-
+    
+        const fetchData = async () => {
+            setLoading(true); // Set loading true before starting the API calls
+            try {
+                await Promise.all([getAllCustomers(), getUserData()]);
+            } catch (error) {
+                setLoading(true); // If an error occurs, keep loading true
+            }
+        };
+    
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -121,6 +137,7 @@ const SharedState = (props) => {
             customers, setCustomers,
             filteredCustomer, setfilteredCustomer,
             totalForCustomer, totalForLender,
+            loading, setLoading,
             toggleModal
         }}>
 

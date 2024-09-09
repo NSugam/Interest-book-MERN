@@ -16,7 +16,6 @@ export default function AddCustomerModal() {
             ...userInput,
             [name]: value
         })
-        console.log(userInput)
     }
 
     const handleAddCustomer = (e) => {
