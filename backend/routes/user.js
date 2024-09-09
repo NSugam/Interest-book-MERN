@@ -46,7 +46,6 @@ router.post('/login', async (req, res) => {
 
         //sending server side Cookies
         res.cookie('_xz', token, {
-            domain: '.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
@@ -84,7 +83,6 @@ router.get('/all', Authenticated, async (req, res) => {
 router.get('/logout', async (req, res) => {
     try {
         res.clearCookie('_xz', {
-            domain: '.vercel.app',
             sameSite: 'None',
             httpOnly: true,
             path: '/',
