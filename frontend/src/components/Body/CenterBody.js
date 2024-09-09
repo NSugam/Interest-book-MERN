@@ -83,7 +83,7 @@ export default function CenterBody() {
 
       </div>
       <hr className='m-auto' />
-      <div class="sticky-container pt-4" style={{ backgroundColor: 'white' }}>
+      <div className="sticky-container pt-4" style={{ backgroundColor: 'white' }}>
         <h6 className=''>Search for customers</h6>
         <div className="d-flex">
           <input className="form-control me-2" type="search" placeholder="Search by Name" onChange={e => setSearchParam(e.target.value)} />

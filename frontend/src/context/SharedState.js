@@ -8,7 +8,7 @@ const Context = createContext();
 
 const SharedState = (props) => {
 
-    const hostname = process.env.REACT_APP_HOSTNAME
+    const hostname = process.env.REACT_APP_LOCALHOST
 
     // Loading state
     const [loading, setLoading] = useState(true);

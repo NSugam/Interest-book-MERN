@@ -57,7 +57,7 @@ export default function EditCustomerModal() {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h1 className="modal-title fs-5 d-flex align-items-center">
-                                <span class="material-symbols-outlined me-2 fs-1">person</span>
+                                <span className="material-symbols-outlined me-2 fs-1">person</span>
                                 {filteredCustomer?.fullname}
                             </h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

@@ -55,35 +55,35 @@ export default function AddCustomerModal() {
                         </div>
                         <div className="modal-body p-3">
                             <form onSubmit={handleAddCustomer}>
-                                <div class="mb-3">
-                                    <label class="form-label">Type</label>
-                                    <select class="form-select" name="type" onChange={handleInput} required>
+                                <div className="mb-3">
+                                    <label className="form-label">Type</label>
+                                    <select className="form-select" name="type" onChange={handleInput} required>
                                         <option value="" selected disabled>Customer or Lender</option>
                                         <option value="customer">Customer (you gave)</option>
                                         <option value="lender">Lender (you got)</option>
                                     </select>
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" name="fullname" value={userInput.fullname} onChange={handleInput} required />
+                                <div className="mb-3">
+                                    <label className="form-label">Full Name</label>
+                                    <input type="text" className="form-control" name="fullname" value={userInput.fullname} onChange={handleInput} required />
                                 </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Phone Number</label>
-                                    <input type="number" class="form-control" name="phone" onChange={handleInput} required />
-                                    <div class="form-text">Data will be confidential.</div>
+                                <div className="mb-3">
+                                    <label className="form-label">Phone Number</label>
+                                    <input type="number" className="form-control" name="phone" onChange={handleInput} required />
+                                    <div className="form-text">Data will be confidential.</div>
                                 </div>
 
-                                <div class="row mb-3">
-                                    <div class="col">
-                                        <label class="form-label">Given Amount</label>
-                                        <input type="number" class="form-control" placeholder="Rs." name="amount" onChange={handleInput} required />
+                                <div className="row mb-3">
+                                    <div className="col">
+                                        <label className="form-label">Given Amount</label>
+                                        <input type="number" className="form-control" placeholder="Rs." name="amount" onChange={handleInput} required />
                                     </div>
 
-                                    <div class="col">
-                                        <label class="form-label">Interest Rate (per annum)</label>
-                                        <input type="number" class="form-control" placeholder="%" name="interest" onChange={handleInput} required />
+                                    <div className="col">
+                                        <label className="form-label">Interest Rate (per annum)</label>
+                                        <input type="number" className="form-control" placeholder="%" name="interest" onChange={handleInput} required />
                                     </div>
                                 </div>
                                 <div className="mb-3">
@@ -92,7 +92,7 @@ export default function AddCustomerModal() {
                                 </div>
 
                                 <div className='d-flex justify-content-end mt-5'>
-                                    <button class="btn btn-primary btn-sm d-flex" data-bs-dismiss="modal"><span class="material-symbols-outlined me-2">person_add</span>Add</button>
+                                    <button className="btn btn-primary btn-sm d-flex" data-bs-dismiss="modal"><span className="material-symbols-outlined me-2">person_add</span>Add</button>
                                 </div>
                             </form>
                         </div>

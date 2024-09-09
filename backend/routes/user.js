@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
         //sending server side Cookies
         res.cookie('_xz', token, {
             sameSite: 'None',
-            httpOnly: true,  // Only allow cookie to be accessed by the server
+            httpOnly: true,
             path: '/',
             secure: true,   // true in production with HTTPS
             expires: new Date(new Date().getTime() + 60 * 10000)
@@ -82,7 +82,7 @@ router.get('/all', Authenticated, async (req, res) => {
 // ROUTER 5: Logout (Clear serverside cookies)
 router.get('/logout', Authenticated, async (req, res) => {
     try {
-        res.cookie('_xz', '', {
+        res.cookie('_xz', 'abcd', {
             sameSite: 'None',
             httpOnly: true,
             path: '/',
