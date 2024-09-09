@@ -8,7 +8,7 @@ const Context = createContext();
 
 const SharedState = (props) => {
 
-    const hostname = process.env.REACT_APP_LOCALHOST
+    const hostname = process.env.REACT_APP_HOSTNAME
 
     // Storing user details
     const [user, setUser] = useState({});
