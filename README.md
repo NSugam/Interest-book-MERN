@@ -1,4 +1,4 @@
-# Interest Calculator Book
+# Interest Book
 
 **Interest Calculator Book** is a MERN stack web application designed to help users keep track of the interest amounts given to different people. The platform also allows users to add information about the loans they have taken. The project is deployed using Vercel.
 
@@ -11,18 +11,19 @@
 
 ## Live Demo
 
+Email: sugam@gmail.com
+Password: sugam123
 You can access the live version of the project [here](https://interest-book.vercel.app/login).
+
 
 ## Technologies Used
 
 - **Frontend**: React.js, Bootstrap for styling
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
-- **Deployment**: Vercel (Frontend), Heroku or Vercel (Backend)
+- **Deployment**: Vercel (Frontend), Vercel (Backend)
 
-## Installation and Setup
-
-1. Clone the repository:
+Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/interest-calculator-book.git
+   git clone https://github.com/NSugam/interest-book.git
