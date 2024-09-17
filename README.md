@@ -11,9 +11,9 @@
 
 ## Live Demo
 
-Email: sugam@gmail.com
-Password: sugam123
-You can access the live version of the project [here](https://interest-book.vercel.app/login).
+- Email: sugam@gmail.com
+- Password: sugam123
+- You can access the live version of the project [here](https://interest-book.vercel.app/login).
 
 
 ## Technologies Used
